@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { TextField, MenuItem, Button, Box } from '@mui/material';
+import { TextField, MenuItem, Button, Box, Typography } from '@mui/material';
 
 const DropdownForm = ({ onSubmit, initialData, Show }) => {
   const [formData, setFormData] = useState({
@@ -29,9 +29,29 @@ const DropdownForm = ({ onSubmit, initialData, Show }) => {
   };
 
   return (
-    <div>
-      <h1>{initialData ? 'Edit Form' : 'Data Insert Form'}</h1>
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: 300 }}>
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh', // Full height of the viewport
+      }}
+    >
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 2,
+          width: 300,
+          p: 3, // Padding
+          border: '1px solid #ccc', // Optional border
+          borderRadius: 4, // Optional border radius
+          boxShadow: 10, // Optional shadow
+        }}
+      >
+        <Typography variant="h5" component="h1" align="center">
+          {initialData ? 'Edit Form' : 'Data Insert Form'}
+        </Typography>
         <TextField
           label="Text"
           name="text"
@@ -47,16 +67,26 @@ const DropdownForm = ({ onSubmit, initialData, Show }) => {
           onChange={handleChange}
           fullWidth
         >
-          <MenuItem value="animals">animals</MenuItem>
-          <MenuItem value="fruits">fruits</MenuItem>
-          <MenuItem value="others">others</MenuItem>
+          <MenuItem value="animals">Animals</MenuItem>
+          <MenuItem value="fruits">Fruits</MenuItem>
+          <MenuItem value="others">Others</MenuItem>
         </TextField>
         <Button variant="contained" onClick={handleSave}>
           {initialData ? 'Update' : 'Save'}
         </Button>
+        <Link 
+          onClick={() => Show(false)} 
+          style={{ 
+            textAlign: 'center', 
+            marginTop: '16px', 
+            color: '#1976d2', 
+            textDecoration: 'none' 
+          }}
+        >
+          View Data List
+        </Link>
       </Box>
-      <Link onClick={() => Show(false)}>View Data List</Link>
-    </div>
+    </Box>
   );
 };
 
