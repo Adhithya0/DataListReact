@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Box, Button, Typography, Paper, List, ListItem, ListItemText } from '@mui/material';
 import DropdownForm from './DropdownForm';
 
 const DisplayPage = () => {
@@ -18,6 +19,7 @@ const DisplayPage = () => {
       // If adding new data, simply add it to the list
       setFormDataList([...formDataList, formData]);
     }
+    setShow(false); // Hide the form after submitting
   };
 
   const handleEdit = (index) => {
@@ -27,24 +29,41 @@ const DisplayPage = () => {
   };
 
   return (
-    <div>
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh',
+        width: '100vw',
+        flexDirection: 'column',
+        bgcolor: '#f0f2f5', // Light background color
+        p: 2,
+      }}
+    >
       {isShow ? (
-        <DropdownForm onSubmit={(data) => handleSubmit(data)} initialData={editIndex !== null ? formDataList[editIndex] : null} Show={setShow} />
+        <DropdownForm onSubmit={handleSubmit} initialData={editIndex !== null ? formDataList[editIndex] : null} Show={setShow} />
       ) : (
-        <div>
-          <h2>Data List</h2>
-          <ul>
+        <Paper elevation={3} sx={{ p: 3, width: '80%', maxWidth: 600 }}>
+          <Typography variant="h4" component="h2" gutterBottom>
+            Data List
+          </Typography>
+          <List>
             {formDataList.map((formData, index) => (
-              <li key={index}>
-                Text: {formData.text}, Dropdown: {formData.dropdown}
-                <button onClick={() => handleEdit(index)}>Edit</button>
-              </li>
+              <ListItem key={index} sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <ListItemText primary={`Text: ${formData.text}`} secondary={`Dropdown: ${formData.dropdown}`} />
+                <Button variant="outlined" onClick={() => handleEdit(index)} sx={{ ml: 2 }}>
+                  Edit
+                </Button>
+              </ListItem>
             ))}
-          </ul>
-          <Link onClick={() => setShow(true)}>Add New</Link>
-        </div>
+          </List>
+          <Button variant="contained" color="primary" onClick={() => setShow(true)} sx={{ mt: 2 }}>
+            Add New
+          </Button>
+        </Paper>
       )}
-    </div>
+    </Box>
   );
 };
 
